@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Importación fuente Karla */
+@font-face {
+  font-family: Karla;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./assets/fonts/Karla-VariableFont_wght.ttf") format("woff2");
+}
+
+@theme {
+  --color-Green-200-lighter: hsl(148, 38%, 91%);
+  --color-Green-600-medium: hsl(169, 82%, 27%);
+  --color-Red: hsl(0, 66%, 54%);
+  --color-White: hsl(0, 0%, 100%);
+  --color-Grey-500-medium: hsl(186, 15%, 59%);
+  --color-Grey-900-darker: hsl(187, 24%, 22%);
+
+  --font-Karla: Karla;
+
+  --breakpoint-md1: 801px;
+}
+
+body {
+  @apply bg-Green-200-lighter font-Karla px-4 py-8 md1:px-[40px] md1:py-[128px];
+}
