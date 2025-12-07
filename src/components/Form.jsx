@@ -7,13 +7,15 @@ export const Form = () => {
   const {
     register,
     handleSubmit,
-    formState : {errors}
+    formState : {errors}, 
+    watch,
+    setValue,
   } = useForm();
 
   console.log(errors);
 
   const sendForm = handleSubmit((data) => {
-    console.log(data);
+    console.log(data.Photo);
   });
 
   return (
@@ -80,7 +82,9 @@ export const Form = () => {
       <Select
         label="Country"
         id="country"
-        {...register("country" , {required: true})}
+        {...register("country" , {
+          required: {value: true, message: "This field is required"},
+        })}
       />
 
       <TextInput
@@ -88,7 +92,10 @@ export const Form = () => {
         label="Upload your photo"
         type="file"
         styleInput=" text-Grey-900-darker"
-        {...register("Photo")}
+        onChange={(e) => {
+          console.log(e.target.files[0]);
+          setValue("foto del usuario", e.target.files[0].name)
+        }}
       />
 
       <TextInput 
@@ -98,6 +105,10 @@ export const Form = () => {
         placeholder="******"
         {...register("password", {
           required: {value: true, message: "This field is required"},
+          minLength: {
+            value: 8,
+            message: "The password must be at least 8 characters long."
+          }
         })}
         isError={errors.password}
         errorMessage={errors.password?.message}
@@ -108,20 +119,34 @@ export const Form = () => {
         label="Confirm Password"
         type="password"
         placeholder="******"
-        {...register("confirmPassword", {required: true})}
+        {...register("confirmPassword", {
+          required: {value: true, message: "This field is required"},
+          validate: value => value === watch("password") || "Password does not match."
+        })}
+        isError={errors.confirmPassword}
+        errorMessage={errors.confirmPassword?.message}
       />
 
       <TextInput
         id="terminos"
         label="I accept the terms and conditions"
         type="checkbox"
-        styleContainer="flex-row items-center gap-4"
-        styleLabel="order-2"
+        styleContainer="flex-row items-center gap-4 relative"
+        styleLabel="order-2 gap-0"
         styleInput="outline-none order-1 size-5 rounded-xl"
-        {...register("terminos", {required: true})}
+        styleParagraph="absolute -bottom-[13px]"
+        {...register("terminos", {
+          required: {value: true, message: "This field is required"},
+        })}
+        isError={errors.terminos}
+        errorMessage={errors.terminos?.message}
       />
 
       <button className="w-full bg-Green-600-medium text-Green-200-lighter font-bold rounded-lg py-3 text-xl cursor-pointer hover:bg-Grey-900-darker duration-200 ease-in">Submit</button>
+
+      <pre>
+        {JSON.stringify(watch(), null, 2)}
+      </pre>
     </form>
   )
 }

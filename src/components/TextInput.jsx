@@ -1,4 +1,4 @@
-export const TextInput = ({label, id, type , placeholder, styleContainer, styleLabel,styleInput, isError, errorMessage = "", ...rest}) => {
+export const TextInput = ({label, id, type , placeholder, styleContainer, styleLabel,styleInput, styleParagraph, isError, errorMessage = "", ...rest}) => {
   return (
     <div className={`w-full flex flex-col gap-1 ${styleContainer}`}>
 
@@ -16,7 +16,9 @@ export const TextInput = ({label, id, type , placeholder, styleContainer, styleL
       />
 
       {
-        isError && <p className="text-Red">{errorMessage}</p>
+        isError && (
+          <p className={`text-Red ${styleParagraph}`}>{errorMessage}</p>
+        )
       }
       
     </div>
